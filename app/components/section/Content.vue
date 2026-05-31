@@ -44,16 +44,16 @@ onUnmounted(() => {
 
 <template>
   <div class="w-full h-full bg-black text-white">
-    <div class="px-4 py-2 flex justify-between items-center border-t border-white/20">
+    <div class="md:px-14 px-4 py-2 flex justify-between items-center border-t border-white/20">
       <span class="text-lg font-bold uppercase">My Expertise</span>
       <span class="text-lg">専門分野</span>
     </div>
 
-    <div class="bg-[#F12E03] w-full h-[70vh]" />
+    <div class="bg-primary w-full h-[70vh]" />
 
-    <div class="w-full grid grid-cols-6 relative p-4">
+    <div class="w-full grid grid-cols-6 relative md:px-14 px-4 py-8">
       <div class="w-full md:col-span-2 col-span-full hidden md:flex sticky top-0 self-start">
-        <span class="text-[352px] font-bold -mt-6 leading-tight">02</span>
+        <span class="text-[352px] -mt-6 leading-tight">02</span>
       </div>
 
       <div class="w-full h-full md:col-span-4 col-span-6 p-4 flex flex-col gap-4">
@@ -102,7 +102,7 @@ onUnmounted(() => {
         :class="preview.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'"
         :style="{ left: preview.x + 'px', top: preview.y + 'px', rotate: '-2deg' }"
       >
-        <div class="w-[220px] bg-[#F12E03] p-6 flex flex-col gap-2">
+        <div class="w-[220px] bg-primary-400 p-6 flex flex-col gap-2">
           <span class="text-[11px] uppercase tracking-[0.16em] text-white/60 font-medium">
             0{{ (preview.index + 1).toString().padStart(2, '0') }}
           </span>

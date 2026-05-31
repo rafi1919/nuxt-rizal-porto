@@ -7,11 +7,18 @@ export default defineNuxtConfig({
       path: '~/components',
       pathPrefix: true,
   }],
+  site:{
+    url: 'https://example.com',
+    name: 'Rizzal Porto',
+    description: 'Welcome to my awesome site!',
+    defaultLocale: 'en', 
+  },
 
   modules: [
     '@nuxtjs/google-fonts',
     '@nuxtjs/seo',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@vueuse/motion/nuxt'
   ],
 
   googleFonts: {
