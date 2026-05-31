@@ -20,5 +20,8 @@
     "playwright-core": "^1.60.0",
     "vue": "^3.5.34",
     "vue-router": "^5.0.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260531.1"
   }
 }
