@@ -6,10 +6,7 @@ export default defineNuxtConfig({
    
   nitro: {
     preset: 'cloudflare-pages',
-    output: {
-      dir: '.output',
-      publicDir: '.output/public',
-    }
+   
   },
   components:[{
       path: '~/components',
