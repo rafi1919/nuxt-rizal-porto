@@ -5,8 +5,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
    
   nitro: {
-    preset: 'cloudflare-pages',
-   
+    preset: 'static',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/sitemap.xml', '/robots.txt']
+    }
   },
   components:[{
       path: '~/components',
