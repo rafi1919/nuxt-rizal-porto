@@ -57,7 +57,7 @@ onUnmounted(() => {
 
         </div>
 
-        <div class="border-t border-white/10">
+        <div class="border-t border-white/10 ">
         <div
             v-for="(project, index) in projects"
             :key="index"
