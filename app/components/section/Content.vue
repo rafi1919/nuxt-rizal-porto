@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const contentList = [
   { title: "Brand Vision & Alignment" },
@@ -12,9 +16,14 @@ const contentList = [
   { title: "Creative Review & Critique" },
 ]
 
+const numberRef = ref<HTMLElement | null>(null)
+const titleRef = ref<HTMLElement | null>(null)
+
 const preview = ref({ x: 0, y: 0, visible: false, index: -1 })
+
 const mouse = { x: 0, y: 0 }
 const cur = { x: 0, y: 0 }
+
 let raf: number
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
@@ -22,8 +31,10 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 function animate() {
   cur.x = lerp(cur.x, mouse.x, 0.1)
   cur.y = lerp(cur.y, mouse.y, 0.1)
+
   preview.value.x = cur.x + 24
   preview.value.y = cur.y - 60
+
   raf = requestAnimationFrame(animate)
 }
 
@@ -35,7 +46,51 @@ function onMouseMove(e: MouseEvent) {
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove)
   animate()
+
+ gsap.fromTo(
+  numberRef.value,
+  {
+    y: 100,
+    opacity: 0,
+    filter: 'blur(20px)',
+  },
+  {
+    y: 0,
+    opacity: 1,
+    filter: 'blur(0px)',
+    duration: 1.2,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: titleRef.value,
+      start: 'top 80%',
+      once: true,
+    },
+  }
+  )
+
+  gsap.fromTo(
+    titleRef.value,
+    {
+      y: 60,
+      opacity: 0,
+      filter: 'blur(12px)',
+    },
+    {
+      y: 0,
+      opacity: 1,
+      filter: 'blur(0px)',
+      duration: 1,
+      delay: 0.4,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: titleRef.value,
+        start: 'top 80%',
+        once: true,
+      },
+    }
+  )
 })
+
 onUnmounted(() => {
   window.removeEventListener('mousemove', onMouseMove)
   cancelAnimationFrame(raf)
@@ -45,25 +100,46 @@ onUnmounted(() => {
 <template>
   <div class="w-full h-full bg-black text-white">
     <div class="md:px-14 px-4 py-2 flex justify-between items-center border-t border-white/20">
-      <span class="text-lg font-bold uppercase">My Expertise</span>
-      <span class="text-lg">専門分野</span>
+      <span class="text-lg font-bold uppercase">
+        My Expertise
+      </span>
+
+      <span class="text-lg">
+        専門分野
+      </span>
     </div>
 
     <div class="bg-primary w-full h-[70vh]" />
 
     <div class="w-full grid grid-cols-6 relative md:px-14 px-4 py-8">
-      <div class="w-full md:col-span-2 col-span-full hidden md:flex sticky top-0 self-start">
-        <span class="text-[352px] -mt-6 leading-tight">02</span>
+      <!-- BIG NUMBER -->
+      <div
+        class="w-full md:col-span-2 col-span-full hidden md:flex sticky top-0 self-start overflow-hidden"
+      >
+        <span
+          ref="numberRef"
+          class="text-[352px] -mt-6 leading-tight"
+        >
+          02
+        </span>
       </div>
 
+      <!-- CONTENT -->
       <div class="w-full h-full md:col-span-4 col-span-6 p-4 flex flex-col gap-4">
-        <h2 class="text-[45px] pt-10 font-bold uppercase leading-none tracking-tight">
-          Unifying Vision, Strategy, and Execution Into Cohesive Experiences
-        </h2>
+        <div class="overflow-hidden">
+          <h2
+            ref="titleRef"
+            class="md:text-[45px] text-[32px] md:pt-10 pt-0 font-bold uppercase leading-none tracking-tight"
+          >
+            Unifying Vision, Strategy, and Execution Into Cohesive Experiences
+          </h2>
+        </div>
+
         <p class="text-[16px] leading-relaxed text-white/40 font-light">
-          I provide brand-first creative direction rooted in vision and clarity—uncovering a brand's "why"
-          and aligning design, voice, and experience into cohesive systems. I connect the big picture
-          across visual, written, audio, and motion to ensure every touchpoint feels intentional.
+          I provide brand-first creative direction rooted in vision and clarity—
+          uncovering a brand's "why" and aligning design, voice, and experience
+          into cohesive systems. I connect the big picture across visual, written,
+          audio, and motion to ensure every touchpoint feels intentional.
         </p>
 
         <div class="h-[100px]" />
@@ -77,17 +153,23 @@ onUnmounted(() => {
             @mouseenter="preview.visible = true; preview.index = index"
             @mouseleave="preview.visible = false"
           >
-            <!-- sliding white bg -->
             <span
-              class="absolute inset-0 bg-white -translate-x-full group-hover:translate-x-0
+              class="absolute inset-0 bg-white -translate-x-full
+                     group-hover:translate-x-0
                      transition-transform duration-300 ease-out"
             />
 
-            <p class="relative z-10 text-[16px] font-semibold text-white
-                      group-hover:text-black transition-colors duration-300">
+            <p
+              class="relative z-10 text-[16px] font-semibold text-white
+                     group-hover:text-black transition-colors duration-300"
+            >
               {{ content.title }}
             </p>
-            <span class="relative z-10 text-white group-hover:text-black transition-colors duration-300">
+
+            <span
+              class="relative z-10 text-white
+                     group-hover:text-black transition-colors duration-300"
+            >
               0{{ index + 1 }}
             </span>
           </div>
@@ -95,17 +177,22 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <!-- cursor preview -->
+    <!-- CURSOR PREVIEW -->
     <Teleport to="body">
       <div
         class="fixed pointer-events-none z-[9999] transition-all duration-200"
         :class="preview.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'"
-        :style="{ left: preview.x + 'px', top: preview.y + 'px', rotate: '-2deg' }"
+        :style="{
+          left: preview.x + 'px',
+          top: preview.y + 'px',
+          rotate: '-2deg'
+        }"
       >
         <div class="w-[220px] bg-primary-400 p-6 flex flex-col gap-2">
           <span class="text-[11px] uppercase tracking-[0.16em] text-white/60 font-medium">
             0{{ (preview.index + 1).toString().padStart(2, '0') }}
           </span>
+
           <p class="text-white font-bold text-[18px] leading-tight">
             {{ contentList[preview.index]?.title }}
           </p>

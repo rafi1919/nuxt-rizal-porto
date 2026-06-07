@@ -43,14 +43,20 @@ onUnmounted(() => {
 <template>
     <div class="bg-black w-full min-h-screen text-white md:p-14 p-4 flex flex-col gap-8">
 
-        <div class="flex justify-between items-top">
-            <span class="uppercase">
-                Featured work
-            </span>
+        <div class="flex md:flex-row flex-col  justify-between items-top gap-8">
+            <div>
+                <span class="uppercase">
+                    Featured work
+                </span>
 
-            <span class="uppercase text-[45px] font-bold leading-none tracking-tight w-[600px]">
-                Selected Work Shaping Brands, Products, and Experiences
-            </span>
+            </div>
+
+            <div>
+                <span class="uppercase md:text-[45px] text-[32px] font-bold leading-none tracking-tight w-[600px]">
+                    Selected Work Shaping Brands, Products, and Experiences
+                </span>
+
+            </div>
             
         </div>
         <div class="w-full h-[70vh] bg-white rounded-lg" >
@@ -59,7 +65,7 @@ onUnmounted(() => {
 
         <div class="border-t border-white/10 ">
         <div
-            v-for="(project, index) in projects"
+            v-for="(project, index) in projects"    
             :key="index"
             class="group flex items-center justify-between py-5 border-b border-white/[0.08]
                 cursor-none transition-all duration-250 hover:pl-3"

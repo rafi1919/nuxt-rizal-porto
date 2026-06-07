@@ -214,7 +214,7 @@ onUnmounted(() => {
       aria-hidden="true"
     />
 
-    <div class="relative z-10 w-full max-w-4xl">
+    <div class="md:relative hidden z-10 w-full max-w-4xl ">
       <div
         v-for="(value, index) in countList"
         :key="index"
@@ -225,6 +225,21 @@ onUnmounted(() => {
           {{ value.title }}
         </h2>
         <h2 class="uppercase text-[clamp(18px,3vw,43px)] text-[#121213]">
+          {{ value.subtitle }}
+        </h2>
+      </div>
+    </div>
+
+     <div class="md:hidden flex flex-col z-10 w-full max-w-4xl ">
+      <div
+        v-for="(value, index) in countList"
+        :key="index"
+        class="w-full flex flex-col justify-between items-start gap-4 border-b border-black/10 py-4"
+      >
+        <h2 class="uppercase text-[clamp(60px,12vw,150px)] font-bold text-[#121213] leading-none">
+          {{ value.title }}
+        </h2>
+        <h2 class="uppercase text-[32px] text-[#121213]">
           {{ value.subtitle }}
         </h2>
       </div>
